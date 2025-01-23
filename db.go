@@ -214,7 +214,7 @@ func Open(path string, mode os.FileMode, options *Options) (*DB, error) {
 	db.path = db.file.Name()
 
 	// Lock file so that other processes using Bolt in read-write mode cannot
-	// use the database  at the same time. This would cause corruption since
+	// use the database at the same time. This would cause corruption since
 	// the two processes would write meta pages and free pages separately.
 	// The database file is locked exclusively (only one process can grab the lock)
 	// if !options.ReadOnly.
@@ -289,7 +289,7 @@ func Open(path string, mode os.FileMode, options *Options) (*DB, error) {
 	// NoFreelistSync unaware boltdb can open the db later.
 	if !db.NoFreelistSync && !db.hasSyncedFreelist() {
 		tx, err := db.Begin(true)
-		if tx != nil {
+		if tx != nil { // tx != nil, 则 err == nil ???
 			err = tx.Commit()
 		}
 		if err != nil {
