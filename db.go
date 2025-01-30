@@ -1115,11 +1115,11 @@ type meta struct {
 	magic    uint32
 	version  uint32
 	pageSize uint32
-	flags    uint32
+	flags    uint32 // 保留字段未使用
 	root     bucket
 	freelist pgid
-	pgid     pgid
-	txid     txid
+	pgid     pgid // 下一个要被分配的pgid
+	txid     txid // 下一个要被分配的txid
 	checksum uint64
 }
 
