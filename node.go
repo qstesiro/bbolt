@@ -593,7 +593,7 @@ func (s nodes) Less(i, j int) bool {
 // It can be used to point to elements in a page or point
 // to an element which hasn't been added to a page yet.
 type inode struct {
-	flags uint32
+	flags uint32 // 当前只存储桶节点标志bucketLeafFlag,leafPageElement为0
 	pgid  pgid
 	key   []byte
 	value []byte
