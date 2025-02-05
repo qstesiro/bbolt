@@ -8,22 +8,22 @@ import (
 
 const (
 	// MaxKeySize is the maximum length of a key, in bytes.
-	MaxKeySize = 32768
+	MaxKeySize = 32768 // 32K
 
 	// MaxValueSize is the maximum length of a value, in bytes.
-	MaxValueSize = (1 << 31) - 2
+	MaxValueSize = (1 << 31) - 2 // ~2G(2147483646)
 )
 
-const bucketHeaderSize = int(unsafe.Sizeof(bucket{}))
+const bucketHeaderSize = int(unsafe.Sizeof(bucket{})) // 16B
 
 const (
-	minFillPercent = 0.1
-	maxFillPercent = 1.0
+	minFillPercent = 0.1 // 10%
+	maxFillPercent = 1.0 // 100%
 )
 
 // DefaultFillPercent is the percentage that split pages are filled.
 // This value can be changed by setting Bucket.FillPercent.
-const DefaultFillPercent = 0.5
+const DefaultFillPercent = 0.5 // 50%
 
 // Bucket represents a collection of key/value pairs inside the database.
 type Bucket struct {
@@ -180,7 +180,7 @@ func (b *Bucket) CreateBucket(key []byte) (*Bucket, error) {
 		rootNode:    &node{isLeaf: true},
 		FillPercent: DefaultFillPercent,
 	}
-	var value = bucket.write()
+	var value = bucket.write() // 内联桶格式: bucket{}+page
 
 	// Insert into node.
 	key = cloneBytes(key)

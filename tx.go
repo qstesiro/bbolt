@@ -52,7 +52,7 @@ func (tx *Tx) init(db *DB) {
 	// Copy over the root bucket.
 	tx.root = newBucket(tx)
 	tx.root.bucket = &bucket{}
-	*tx.root.bucket = tx.meta.root
+	*tx.root.bucket = tx.meta.root // 第4页 {root: 3, sequence: 0}
 
 	// Increment the transaction id and add a page cache for writable transactions.
 	if tx.writable {

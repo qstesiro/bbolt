@@ -219,6 +219,7 @@ func (n *node) write(p *page) {
 		off += uintptr(sz)
 
 		// Write the page element.
+		// 元素头
 		if n.isLeaf {
 			elem := p.leafPageElement(uint16(i))
 			elem.pos = uint32(uintptr(unsafe.Pointer(&b[0])) - uintptr(unsafe.Pointer(elem)))
@@ -234,6 +235,7 @@ func (n *node) write(p *page) {
 		}
 
 		// Write data for the element to the end of the page.
+		// 元素体
 		l := copy(b, item.key)
 		copy(b[l:], item.value)
 	}
