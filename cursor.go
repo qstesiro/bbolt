@@ -315,8 +315,8 @@ func (c *Cursor) nsearch(key []byte) {
 
 	// If we have a node then search its inodes.
 	if n != nil {
-		index := sort.Search(len(n.inodes), func(i int) bool {
-			return bytes.Compare(n.inodes[i].key, key) != -1
+		index := sort.Search(len(n.inodes), func(i int) bool { // 未匹配到返回n
+			return bytes.Compare(n.inodes[i].key, key) != -1 // >=
 		})
 		e.index = index
 		return

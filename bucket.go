@@ -11,7 +11,7 @@ const (
 	MaxKeySize = 32768 // 32K
 
 	// MaxValueSize is the maximum length of a value, in bytes.
-	MaxValueSize = (1 << 31) - 2 // ~2G(2147483646)
+	MaxValueSize = (1 << 31) - 2 // ~2G(1.99999999814G)(2147483646)
 )
 
 const bucketHeaderSize = int(unsafe.Sizeof(bucket{})) // 16B
@@ -295,7 +295,7 @@ func (b *Bucket) Put(key []byte, value []byte) error {
 	k, _, flags := c.seek(key)
 
 	// Return an error if there is an existing key with a bucket value.
-	if bytes.Equal(key, k) && (flags&bucketLeafFlag) != 0 {
+	if bytes.Equal(key, k) && (flags&bucketLeafFlag) != 0 { // key与子桶key相同
 		return ErrIncompatibleValue
 	}
 
